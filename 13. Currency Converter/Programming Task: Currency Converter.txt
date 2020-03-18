@@ -1,0 +1,10 @@
+Currency Converter
+Task description
+In this task, you will have to write your own currency converter. Exchange rates must be taken from the Central Bank API. The documentation on it is here, only XML_daily.asp is required. (Note that the http protocol specified in the API documentation is no longer supported for requests using requests.get, specify https in the query string)
+
+The convert (amount, cur_from, cur_to, date, requests) function will be passed the amount amount in the currency with the cur_from code, and it must be converted into cur_to currency in rubles (code: RUR). To request an API, you must use the passed requests, more precisely, its get () method.
+
+All amounts and rates must be stored in Decimal, as fixed point calculations are more suitable for financial data.
+The final result needs to be rounded up to 4 characters before returning it from the function. See the quantize () method.
+For some currencies, the exchange rate is returned not for one monetary unit of the specified currency, but for 10 or even 100, therefore the exchange rate in XML has not only Value, but also Nominal, and the formula is true: Nominal units. currency = Value rubles.
+When checking on the server, the network is unavailable. The fake requests will be passed to the function, its interface and response are similar to the present. If you use it in the amount required for the job, the difference will not be noticeable.

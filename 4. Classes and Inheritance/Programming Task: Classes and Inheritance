@@ -1,0 +1,44 @@
+Suppose there are data on different cars and special equipment. The data are presented in the form of a table with characteristics. All equipment is divided into three types: special equipment, cars and trucks. Please note that some characteristics are inherent only to a certain type of technology. For example, cars have the characteristic “number of passenger seats,” and trucks have the dimensions of the body: “length”, “width” and “height”.
+
+You need to create your own class hierarchy for the data described in the table. Classes should be called CarBase (base class for all types of cars), Car (cars), Truck (trucks) and SpecMachine (special equipment). All objects have the required attributes:
+
+- car_type, an object type value and can take one of the values: "car", "truck", "spec_machine".
+
+- photo_file_name, the name of the file with the image of the machine, the names of image files with the extension from the list are acceptable: “.jpg”, “.jpeg”, “.png”, “.gif”
+
+- brand, brand of machine manufacturer
+
+- carrying, carrying capacity
+
+In the base CarBase class, you need to implement the get_photo_file_ext method to get the image file extension. The file extension can be obtained using os.path.splitext.
+
+For a truck, it is necessary to define the attributes in the class constructor: body_length, body_width, body_height, which are responsible respectively for the dimensions of the body - length, width and height. Dimensions are passed in the parameter body_whl (a string in which the dimensions are separated by the Latin letter "x"). Please note that the characteristics of the body must be real numbers and the characteristics of the body may not be valid (for example, an empty string). In this case, all attributes responsible for the dimensions of the body are assigned a value equal to zero.
+
+Also for the truck class, you must implement the get_body_volume method, which returns the volume of the body.
+
+In the Car class, the passenger_seats_count attribute (the number of seats) must be defined, and in the SpecMachine class, extra (an additional description of the car).
+
+Full information about the class attributes is given in the table below, where 1 - means that the attribute is required for the object, 0 - the attribute should be absent.
+
+
+	                    Car	Truck	SpecMachine
+car_type	            1	1	    1
+photo_file_name	        1	1	    1
+brand	                1	1	    1
+carrying	            1	1	    1
+passenger_seats_count	1	0	    0
+body_width	            0	1	    0
+body_height	            0	1	    0
+body_length	            0	1	    0
+extra	                0	0	    1
+
+
+
+Note that each object in the hierarchy must have its own set of attributes and methods. For example, a passenger car class should not have a get_body_volume method, unlike a truck class. The names of attributes and methods must match those described above.
+
+Next, you need to implement the get_car_list function, the input of which is given a file name in csv format. The file contains data similar to the rows from the table. You need to read this file line by line using the csv standard library module. Then analyze the lines for validity and create a list of objects with cars and special equipment. The function should return a list of objects.
+
+You can use the following csv file to debug the get_car_list function
+
+The first line in the source file is the csv header, which contains the column names. You need to skip the first line from the source file. Please note that in some lines of the source file, the data may be filled incorrectly, for example, missing required fields or have an invalid value. In this case, you need to ignore such lines and not create objects. Lines with an empty or invalid value for body_whl should not be ignored. You can use the standard exception handling mechanism in the process of reading, validating and creating objects from lines of a csv file. Verify your code works with the input file before downloading the assessment task.
+

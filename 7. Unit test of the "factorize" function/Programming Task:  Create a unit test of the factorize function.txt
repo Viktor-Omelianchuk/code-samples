@@ -1,0 +1,20 @@
+The factorize (x) function is given with the following contract:
+
+def factorize(x):
+    """ 
+    Factorize positive integer and return its factors.
+    :type x: int,>=0
+    :rtype: tuple[N],N>0
+    """
+    pass
+
+You must write a test suite using the unittest module of the Python standard library. The name of the test class is TestFactorize.
+
+Description of tests:
+
+test_wrong_types_raise_exception - Verifies that an argument of type float or str passed to the function throws a TypeError exception. Test input data set: 'string', 1.5
+test_negative - Checks that passing a negative number to the factorize function throws a ValueError exception. Test input data set: -1, -10, -100
+test_zero_and_one_cases - checks that when passing integers 0 and 1 to the function, tuples (0,) and (1,) are returned. Test data set: 0 → (0,), 1 → (1,)
+test_simple_numbers - that for simple numbers, a tuple containing one given number is returned. Test data set: 3 → (3,), 13 → (13,), 29 → (29,)
+test_two_simple_multipliers - checks cases when numbers are passed for which the factorize function returns a tuple with the number of elements equal to 2. Test data set: 6 → (2, 3), 26 → (2, 13), 121 -> (11, 11)
+test_many_multipliers - checks cases when numbers are passed for which the factorize function returns a tuple with the number of elements greater than 2. Test data set: 1001 → (7, 11, 13), 9699690 → (2, 3, 5, 7, 11, 13, 17 , 19)

@@ -1,0 +1,8 @@
+Task description
+In the previous task, it was necessary to implement part of the online store API, but at the same time we did not take into account the differentiation of access rights. Agree, it will not be very nice if an anonymous user creates new products in your store. Therefore, in this task, you will protect your API from anonymous users using standard Django mechanisms.
+
+You need to restrict access to the point / api / v1 / goods / (POST) from the previous task so that only registered users with the is_staff flag set have access to it. Authentication must be performed using the key passed in the Authorization header. The key should be a string of the form login: password encoded in base64. In other words, you need to implement HTTP Basic Auth for a single point API. If the user does not have the is_staff flag, an empty response with the status 403 should be returned. If the username and / or password are not valid, an empty response with the status 401 should be returned.
+
+Note: We understand that for such purposes it’s enough to install one of the many Python packages and connect it to Django, but the goal of the task is to understand the Django authentication system and extend it.
+
+You need to implement authentication and authorization on the point API / api / v1 / goods / (POST). All code must be in view.py

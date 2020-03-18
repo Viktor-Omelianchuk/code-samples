@@ -1,0 +1,27 @@
+Implement your own key-values ​​storage. The data will be saved in the storage.data file. Adding new data to the storage and obtaining the current values ​​is carried out using the storage.py command line utility. Utility operation example:
+
+Saving the value value by key key_name:
+$ storage.py --key key_name --val value
+
+Getting the value by key key_name:
+storage.py --key key_name
+
+
+Your task will be to write an implementation of the storage.py utility.
+
+The utility can be called with the following parameters:
+
+--key <key name>, where <key name> is the key by which values ​​are saved / obtained
+
+--val <value>, where <value> is the stored value.
+
+If both keys are transferred when the utility starts, the passed value is added by the key and the data is saved in a file. If only the key name is transmitted, the storage file is read and the values ​​that were saved with this key are printed. Please note that the values ​​for one key are not overwritten, but added to those already saved. In other words, several values ​​can be stored on one key. When printed, the values ​​are displayed in the order they were added to the repository. Print format for multiple values:
+
+value_1, value_2
+
+
+Note the space after the decimal point. If no key values ​​were found, print an empty string or None.
+
+To work with command line arguments, use the argparse module. We recommend storing data in a file in JSON format using the standard json library module. Before submitting your solution for testing, test your utility by adding several keys and different values.
+
+The file should be created using the tempfile module.

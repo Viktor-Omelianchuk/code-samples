@@ -1,0 +1,13 @@
+In this task, you need to create an interface for working with files. The interface should provide the following capabilities for working with files:
+
+- reading from a file, the read method returns a string with the current contents of the file
+
+- write to a file, the write method takes as an argument a string with the new contents of the file
+
+- addition of objects of type File, the result of addition is an object of class File, and a new file and a file object are created in which the contents of the second file are added to the contents of the first file.
+
+- return the full path to the file as a string representation of an object of the File class
+
+- support the iteration protocol, and iteration goes through the lines of the file
+
+When creating an instance of the File class, the full path to the file on the file system is passed to the constructor. If a file with this path does not exist, it must be created during initialization.

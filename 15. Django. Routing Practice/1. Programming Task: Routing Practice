@@ -1,0 +1,64 @@
+Routing Practice
+In this task, you will learn how to build a web application navigation, write a view that can receive and operate with various parameters from the request (parameters from the URL, GET parameters, POST parameters), and generate simple HTTP responses with different statuses.
+
+To complete the task, you must use the project template https://github.com/alexopryshko/coursera_assignment_tmp
+
+The views that need to be edited are in routing / views.py, urls are routing / urls.py.
+
+The solution should be a zip archive. Please note that the archive name must not contain Cyrillic letters or spaces (valid characters are letters of the Latin alphabet and underscore, for example: routing.zip, solution_routing.zip, etc.). The archive should contain two files that you edited earlier (note that the name of the files should be exactly that): urls.py, views.py
+
+1. You need to write view simple_route, which generates an http response with an empty body with a status of 200 for a GET request (if requests other than GET, return 405) by / routing / simple_route /:
+
+Method      Way                                 Status      Body
+get         /routing/simple_route/              200         Empty
+get         /routing /simple_route/blabla       404         -
+post        /routing/simple_route/              405         -
+put         /routing/simple_route/              405         -
+
+
+Note: “-” in the “body” column means that the body is not checked in the grader
+
+2. slug_route - you need to write a view that takes slug and gives it in the body of the response. The allowed characters in slug are: 0-9, a-z, -, _. Minimum length 1 character, maximum length 16.
+
+Cases:
+
+Method       Way                                                Status          Body
+get         / routing / slug_route / a-1s_d2 /                  200             a-1s_d2
+get         / routing / slug_route / 1411rwasf123412341234 /    404             -
+get         /routing/slug_route/.4/24-00-00[/                   404             -
+
+
+3. sum_route - you need to write a view that takes 2 numbers and sums them, for example / routing / sum_route / 1/2 /
+
+Cases:
+
+Method      Way                                 Status      Body
+get         / routing / sum_route / 1/2/        200         3
+get         / routing / sum_route / 1 / -2 /    200         -1
+get         / routing / sum_route / 1 / b /     404         -
+get         / routing / sum_route / a / 2/      404         -
+
+
+
+4. sum_get_method - you need to write a view that takes 2 numbers from the GET parameters a and b and sums them. Only the GET method is allowed. For example / routing / sum_get_method /? A = 1 & b = 2
+
+Cases:
+Method      Way                                                 Status          Body
+get         / routing / sum_get_method /? a = 1 & b = 2         200             3
+get         / routing / sum_get_method /? a = 1 & b = -2        200             -1
+get         / routing / sum_get_method /? a = 1 & b = b         400              -
+get         / routing / sum_get_method /? a = a & b = 2         400              -
+get         / routing / sum_get_method /                        400              -
+
+
+5. sum_post_method - you need to write a view that takes 2 numbers from the POST parameters a and b and sums them. Only the POST method is allowed. For example / routing / sum_post_method /
+
+Cases:
+
+Path                            Parameters          Status          Body
+/routing/sum_post_method/       a = 1 & b = 2       200             3
+/ routing / sum_post_method /   a = 1 & b = -2      200             -1
+/ routing / sum_post_method /   a = 1 & b = b       400             -
+/ routing / sum_post_method /   a = a & b = 2       400             -
+/ routing / sum_post_method /   -                   400             -
+

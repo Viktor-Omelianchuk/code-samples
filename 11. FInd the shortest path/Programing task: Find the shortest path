@@ -1,0 +1,5 @@
+Find the shortest path through the accompanying links in the files from the specified "start" to "finish" in the files of the directory / wiki
+For example, the start page is Stone_Age, and the end page is Python_ (programming_language).
+
+The result should match:
+['Stone_Age', 'Brain', 'Artificial_intelligence', 'Python_ (programming_language)']

@@ -1,0 +1,9 @@
+To transfer data between functions, modules or different systems, data formats are used. One of the most popular formats is JSON. Write a to_json decorator that you can apply to various functions to convert their return value to JSON format. Do not forget about saving the correct name of the function to be decorated.
+
+@to_json
+def get_data():
+  return {
+    'data': 42
+  }
+  
+get_data()  # >>>>>>>>>> '{"data": 42}'

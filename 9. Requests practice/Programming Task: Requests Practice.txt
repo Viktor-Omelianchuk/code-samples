@@ -1,0 +1,26 @@
+Requests practice
+In this task, you will learn how to work with the requests library (http://docs.python-requests.org/en/master/), and also learn how to work with the VK service API and its documentation, which is a fairly common task of the developer.
+
+You must write a client to the VK API, which will consider the distribution of the ages of friends for the specified user. That is, the username or user_id of the user is input, the output is a list of pairs (<age>, <number of friends with that age>) sorted in descending order by the second key (number of friends) and ascending by the first key (age).
+
+
+The solution should be friends.py
+
+
+To do this, you need two VK API methods:
+
+1. Method for getting the user id (https://vk.com/dev/users.get). It is necessary, since the username of the user can be input. Request API URL VK: https://api.vk.com/method/users.get
+
+2. A method for obtaining a list of friends of a user (https://vk.com/dev/friends.get). Request API URL VK: https://api.vk.com/method/friends.get
+
+To access these methods, you will need a “Service Access Key”:
+
+https://vk.com/dev/access_token?f=3.%20%D0%A1%D0%B5%D1%80%D0%B2%D0%B8%D1%81%D0%BD%D1%8B%D0%B9%20%D0%BA%D0%BB%D1%8E%D1%87%20%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%B0
+
+
+When solving the task, pay attention to several points.
+
+In the request we use the VK API version - “5.71”.
+The key fields = bdate has been added in the request to get a list of friends. It is necessary for the API to immediately return users with dates of birth.
+When analyzing the response received by the friends.get method, it can be noted that not all users have bdate and some have no year of birth in bdate. Therefore, you must skip this case. Examples of possible values: "bdate": "6.6", "bdate": "25.8.1993". To calculate the age, you need to take the current year and subtract from it the user's birth year obtained from the API (excluding month and day).
+In your decision, you can (if necessary) define additional functions and import modules.

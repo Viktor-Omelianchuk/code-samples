@@ -1,0 +1,21 @@
+In this task, you need to write a program that will find a series of simple arithmetic expressions in the text and count them.
+
+Any expression starts with the variable name a, b or c, then it can go + or -, then it goes =, then it can go the name of the variable a, b or c, and then it can go + or - and an integer. If there is no variable on the right side of the expression, then the number can be unsigned + or -
+
+There are no variable names other than a, b or c, and actions other than those described here. There are no spaces around signs. The text does not contain incorrect expressions in which to the right of = there is neither a variable nor a number. Thus, the list of expression types that may occur looks something like this:
+
+a = 1, a = + 1, a = -1, a = b, a = b + 100, a = b-100, b + = 10, b + = + 10, b + = - 10, b + = b, b + = b + 100, b + = b-100, c- = 101, c - = + 101, c - = - 101, c- = b, c- = b + 101, c- = b-101
+
+Expressions can occur within the text, for example, loremc- = a + 10ipsuma- = adb + = 10olorsitamet.
+
+A dictionary will be passed to your function calculate (data, findall) with the initial values ​​of the variables a, b and c: data = {"a": 1, "b": 2, "c": 3} and a link to the findall function, and you should return the same dictionary with new values ​​for a, b and c.
+
+Findall () works similarly to re.findall (), only it has only one parameter - regular expression. And she knows the text in which she will look for expressions herself (see the attached archive to understand what it is about). Using findall (), you need to at least find all the expressions in the text, and as a maximum to find them and break them into groups so that it is convenient to process them. If findall () is called more than once, or if the size of the list that it returns is different from the number of expressions in the text, the test will fail.
+
+The reference solution takes 11 lines, does not contain imports, does not use eval, and the regular expression finds expressions and beats each into four groups (some groups for some expressions are empty):
+
+The name of the variable on the left.
+Sign in front = (if any).
+The name of the variable on the right (if any).
+A number (if any) with a sign (if any).
+This allows you to easily (literally in one line) calculate the right side, and then, depending on the presence of the sign before =, perform an action on the left side. However, your algorithm may be different, you only need to fulfill the restrictions on calling findall () and leave the signature calculate () unchanged.

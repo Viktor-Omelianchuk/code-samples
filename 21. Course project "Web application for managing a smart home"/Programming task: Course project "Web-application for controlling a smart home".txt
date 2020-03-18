@@ -1,0 +1,73 @@
+Project Description
+Your task will be to implement a smart home management server on Django that has a web interface for configuration and manual control, which will periodically poll sensors and automatically respond in case of certain situations using the smart home controller API
+
+The authors of the course made a virtual controller, sensors and devices that it controls. By going to the site and registering, you will receive a unique key (KEY), which you will need to use when working with the controller API. Using the same key, you can get an image from the “virtual camera” of a smart home, on which it will be clearly visible which devices are working or why this or that sensor worked, and manually control the devices. API documentation can be viewed on the same site.
+
+
+The site - https://smarthome.webpython.graders.eldf.ru/
+
+
+Devices connected to the controller are writable (usually true - enable / open, false - disable / close, but there are options). Both sensors and devices are readable. Devices, when reading from them, work as sensors and return their stock, which may be different from the recorded one.
+
+
+Devices (recording):
+air_conditioner - Air conditioning (true - on, false - off). When turned on, it gradually lowers the temperature in the bedroom until it reaches 16 degrees and can no longer cool more.
+bedroom_light - The lamp in the bedroom (true - on, false - off).
+bathroom_light - The lamp in the bathroom (true - on, false - off).
+curtains - Curtains string (“open” - open, “close” - close).
+boiler - Boiler (true - on, false - off). When turned on, it gradually raises the temperature of the water until it reaches 90 degrees. For operation, the cold water inlet tap must be open.
+cold_water - Cold water inlet tap (true - open, false - close). Allows you to open / close the supply of cold water to the apartment
+hot_water - Hot water inlet tap (true - open, false - close).
+washing_machine - Washing machine string (“on” - on, “off” - off). When turned on, it starts to erase, then it turns off on its own. May break and leak.
+
+
+Sensors (reading):
+air_conditioner - Air conditioning. (true - on, false - off).
+bedroom_temperature - The temperature in the bedroom. Int (0 - 80).
+bedroom_light - The lamp in the bedroom. (true - on, false - off).
+smoke_detector - Smoke detector on the ceiling. (true - smoke, false - no).
+bedroom_presence - The presence sensor in the bedroom. (true - there is a person, false - no).
+bedroom_motion - The motion sensor in the bedroom. (true - there is movement, false - no).
+curtains - Curtains. string (“open” - open, “close” - closed, “slightly_open” - ajar manually).
+outdoor_light - Light sensor outside the window (0 - 100).
+boiler - boiler. (true - on, false - off).
+boiler_temperature - Hot water temperature of the boiler. Int (0 - 100 / null). If cold water is shut off, there is no water in the boiler, and the sensor returns null.
+cold_water - Cold water inlet tap. (true - open, false - closed).
+hot_water - Hot water inlet faucet. (true - open, false - closed).
+bathroom_light - The lamp in the bathroom. (true - on, false - off).
+bathroom_presence - The presence sensor in the bathroom. (true - there is a person, false - no).
+bathroom_motion - Motion sensor in the bathroom. (true - there is movement, false - no)
+washing_machine - Washing machine. string (“on” - on, “off” - off, “broken” - broken).
+leak_detector - Water leakage sensor (true - leakage, false - dry).
+
+
+
+The task
+
+A web form should open at / with the following controls:
+
+bedroom_target_temperature - input type = number, the desired temperature in the bedroom, remember the setting in the database, display the current setting from the database on the form. The valid value is from 16 to 50, default: 21
+hot_water_target_temperature - input type = number, the desired temperature of hot water in the house, remember the setting in the database, display the current setting from the database on the form. The valid value is from 24 to 90, default: 80
+bedroom_light - checkbox, turn on / off the light in the bedroom, synchronize the value with the controller
+bathroom_light - checkbox, turn on / off the light in the bathroom, synchronize the value with the controller
+There, display the current values ​​of all sensors read from the controller. To render a template, the values ​​read from the controller must be in the dictionary in context.data.
+
+Automatically implement a controller poll in the background every second (django celery) and a reaction to some events.
+
+Reaction to events:
+If there is a water leak (leak_detector = true), close the cold (cold_water = false) and hot (hot_water = false) water and send a letter at the time of detection.
+If cold water (cold_water) is closed, immediately turn off the boiler and the washing machine (washing_machine) and under no circumstances turn them on until the cold water is opened again.
+If hot water has a temperature (boiler_temperature) less than hot_water_target_temperature - 10%, you need to turn on the boiler (boiler), and wait until it reaches the temperature hot_water_target_temperature + 10%, after which, in order to save energy, the boiler must be turned off
+If the curtains are partially open (curtains == “slightly_open”), then they are manually controlled - this means their state cannot be changed automatically under any circumstances.
+If the street (outdoor_light) is darker than 50, open the curtains (curtains), but only if the lamp in the bedroom (bedroom_light) does not light. If the street (outdoor_light) is lighter than 50, or the light in the bedroom (bedroom_light) is on, close the curtains. Except when they are manually operated
+If smoke is detected (smoke_detector), immediately turn off the following appliances [air_conditioner, bedroom_light, bathroom_light, boiler, washing_machine], and under no circumstances turn them on until the smoke disappears.
+If the temperature in the bedroom (bedroom_temperature) has risen above bedroom_target_temperature + 10% - turn on the air conditioner (air_conditioner), and wait until the temperature drops below bedroom_target_temperature - 10%, then turn off the air conditioner.
+The polling of the controller and sending it a response should occur inside the core.tasks.smart_home_manager function. This function must be called periodically at intervals of 5 seconds, for example, using celery. At the beginning of its work, the function requests data from the controller using requests.get in the API, then analyzes the user's settings for the desired temperature from the database, and at the end, if correction is required, makes requests.post in the API with commands for the controller, if you need to send a letter, then sends it.
+
+To send letters, you need to use send_mail from django.core.mail, and in settings you need to set the settings EMAIL_HOST, EMAIL_PORT and other EMAIL_ *, so that during development you send letters through some mail system and can check their work. During job verification on the server, these settings will be overridden.
+
+To save the settings in the database, you need to use the Settings (name, value) model, the blank for which there are already source codes attached.
+
+The web form for setting up and managing a smart home should open in the root of the site, contain 4 input’s with names (name = ...): bedroom_target_temperature, hot_water_target_temperature, bedroom_light, bathroom_light.
+
+In settings, you need to add the variables SMART_HOME_API_URL and SMART_HOME_ACCESS_TOKEN and set their values, then use them to interact with the smart home. You can also add EMAIL_RECEPIENT, which set the recipient of letters from the system.

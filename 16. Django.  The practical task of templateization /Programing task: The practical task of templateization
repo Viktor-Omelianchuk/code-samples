@@ -1,0 +1,50 @@
+The practical task of templateization
+
+Part 1
+In this assignment, you will learn how to form data for a template (context), pass those parameters to a template, and learn the basic basics of the Django template language.
+
+You must use the project template https://github.com/alexopryshko/coursera_assignment_tmp to complete the task
+
+In views.py you need to create an echo (request) function that accepts a request and returns an HttpResponse always with a status of 200, and it must return the echoes passed in the request, the parameters and the value of the X-Print-Statement header. View should be accessible by / template / echo /
+
+The views you want to edit are in template / views.py, template - template / templates / echo.html.
+
+The solution should be a zip archive. The archive should contain two files that you have edited before (note that the file name should be exactly like this): views.py, echo.html
+
+Method                  Parameters                      Headers                     Answer
+get                     GET parameters: a = 1           -                           get a: 1 statement is empty
+get                     GET parameters: c = 2           -                           get c: 2 statement is empty
+post                    POST parameters: b = 1          -                           post b: 1 statement is empty
+post                    POST parameters: d = 3          -                           post d: 3 statement is empty
+get, post               -                               X-Print-Statement = test    statement is test
+get, post               -                               -                           statement is empty
+
+
+
+Part 2
+In this quest you will learn how to create template filters. Filters are often used in practice, such as when it is necessary to bring data to a particular view (https://docs.djangoproject.com/en/1.11/ref/templates/builtins/), in particular:
+
+change the date format
+Bring the string to lowercase
+You must use the project template https://github.com/alexopryshko/coursera_assignment_tmp to complete the task
+
+The templatetags you want to edit are in template / templatetags / extras.py. The solution must be an extras.py file.
+
+2.1. Filter inc. It is necessary to create an "inc" filter in the extras.py file, which takes 2 arguments: 1st to increase the number, 2nd to increase the first number. An example of using the "inc" filter is provided in the template / templates / filters.html file
+
+2.2. The division tag. You need to create a "division" tag in the extras.py file, which accepts 3 parameters: 1st - divisible, 2nd - divisor, 3rd - flag specifying the type of return value for the divisional result (named argument to_int). If the passed to_int value is False, a real division must be performed. If True is transmitted, the result of the real division must be brought to the whole. The default to_int value is False.
+
+Note that the divisor and the divisor are integers, but are passed to a tag in string format.
+
+An example of using the "division" tag is provided in the template / templates / filters.html file
+
+
+
+Part 3
+In this assignment, you will learn how to work with pattern inheritance. Inheritance is widely used. For example, the header and footer of the site is the same, it is not necessary to duplicate the header and footer code on each page, it makes sense to make a basic template and inherit from it.
+
+You must use the project template https://github.com/alexopryshko/coursera_assignment_tmp to complete the task
+
+The template you want to edit template / templates / extend.html. The solution must be an extend.html file.
+
+It is necessary to write a template which is inherited from template / templates / base.html and overrides blocks block_a, block_b. In blocks_a, block_b should remain what was in the parent template and further output parameter "a" and parameter "b"

@@ -1,0 +1,20 @@
+Task description
+The test database contains three tables: store, product and sales. If everything is obvious with the data in the store, product tables, then in the sale table each line is the data about the sale of the product (product_id), from the warehouse (store_id), in quantity (quantity), for the total amount (total) and the date of sale ( date).
+
+
+The tables are filled with some test data. You are given 10 tasks, in each you need to write exactly one SELECT query (possibly with subqueries enclosed) to get the required selection. Next, you need to compare the result that your SELECT returns with what is shown as the correct result for the task. They must match.
+
+After you write all 10 queries, you need to add them to the results.sql file. The line of each request should be located strictly under the corresponding comment (with its number). How will the solution be verified? The test system contains a database similar in structure, but with a different set of test data. The queries from the file with your solution will be executed one by one to the database, and the results are checked against the reference.
+
+
+If you have docker installed, then you can install and run mysql 5.7 like this:
+$ docker run --name mysql57 -p 3306:3306 --rm -de MYSQL_ROOT_PASSWORD=passw mysql:5.7
+
+download the attached file:
+$ docker exec -i mysql57 mysql -uroot -ppassw < sales.sql
+
+after that, you can connect to the server using the MySQL Workbench or the command:
+$ docker exec -it mysql57 mysql -uroot -ppassw test
+
+
+For the correct display of Russian letters, you must execute the SQL query: set names utf8;

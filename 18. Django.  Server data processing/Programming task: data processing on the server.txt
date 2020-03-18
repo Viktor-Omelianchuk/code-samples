@@ -1,0 +1,85 @@
+Task description
+In this task, you need to implement part of the online store API. In particular, this API should allow the creation of products and reviews for these products.
+
+You can consider that you were very lucky with the customer, since the API points that need to be implemented are strictly limited in format.
+
+
+
+Request to save product information:
+
+(POST) / api / v1 / goods / - create a product in the store
+Request format: application / json
+
+Request example:
+{
+   "title": "Cheese \" Russian \ "",
+   "description": "Very tasty cheese, and even Russian.",
+   "price": 100
+}
+
+Limitations:
+- All fields are required
+- title - not an empty string, no longer than 64 characters
+- description - not an empty string, no longer than 1024 characters
+- price - not an empty string (which can be converted to an integer) or an integer, values from 1 to 1,000,000
+
+Possible answers:
+- 201 - item saved successfully
+   Answer example:
+     {"id": 112}
+- 400 - request failed validation
+
+
+
+
+Request to save product review:
+
+(POST) / api / v1 / goods /: id / reviews / - create a review for the product, where: id is the product id.
+Request format: application / json
+
+Request example:
+{
+   "text": "Best. Cheese. Ever.",
+   "grade": 9
+}
+
+Limitations:
+- All fields are required
+- text - not an empty string, no longer than 1024 characters
+- grade - not an empty string (which can be converted to an integer) or an integer, values from 1 to 10
+
+Possible answers:
+- 201 - review saved successfully
+   Answer example:
+     {"id": 95}
+Please note that the returned id is the id of the recall, not the product !!!
+- 400 - request failed validation
+- 404 - there is no product with this id.
+
+
+Request for product information:
+
+(GET) / api / v1 / goods /: id / - get product information, including the last 5 reviews.
+Request format: application / json
+
+Limitations:
+- If there are more than 5 reviews, return the last 5. The order should be determined by the review id
+- If there are less than 5 reviews, return how many are.
+- If there are no product reviews, return an empty list.
+
+Possible answers:
+- 200 - OK
+   Answer example:
+   {
+     "id": 112,
+     "title": "Cheese \" Russian \ "",
+     "description": "Very tasty cheese, and even Russian.",
+     "price": 100,
+     "reviews": [{
+       "id": 95,
+       "text": "Best. Cheese. Ever.",
+       "grade": 9
+     }]
+   }
+- 404 - there is no product with this id.
+
